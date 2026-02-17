@@ -1,8 +1,6 @@
-
 public class Main {
     public static void main(String[] args) {
         SLinkedList<Integer> list = new SLinkedList<>();
-        
         list.addFirst(10);
         list.addFirst(20);
         list.addLast(5);
