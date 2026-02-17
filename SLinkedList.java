@@ -48,11 +48,11 @@ public class SLinkedList<T> implements Iterable<T>{
         newNode.next = head;
         head = newNode;
         if (tail == null) {
-            tail = newNode; // If the list was empty, set tail to the new node
+            tail = newNode; 
         }
         else {
-            tail.next = newNode; // Update the next reference of the old tail
-        }   tail = newNode; // Update the tail reference to the new node
+            tail.next = newNode; 
+        }   tail = newNode; 
         size++;
     }
     public void addLast(T data){
@@ -79,7 +79,7 @@ public class SLinkedList<T> implements Iterable<T>{
         head = head.next;
         size--;
         if (head == null) {
-            tail = null; // If the list becomes empty, set tail to null
+            tail = null; 
         }
         return data;
     }
@@ -87,7 +87,7 @@ public class SLinkedList<T> implements Iterable<T>{
         if (head == null) {
             throw new NoSuchElementException("List is empty");
         }
-        if (head.next == null) { // Only one element
+        if (head.next == null) { 
             T data = head.data;
             head = null;
             tail = null;
