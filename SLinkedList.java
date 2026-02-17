@@ -139,6 +139,32 @@ public class SLinkedList<T> implements Iterable<T>{
         }
         return tail.data;
     }
+    public void remove(T e){
+        
+        if (head == null) return;
+
+        // Case 1: head is the node to remove
+        if (head.data.equals(e)) {
+            head = head.next;
+            if (head == null) tail = null; // list became empty
+            size--;
+            return;
+        }
+
+        Node<T> prev = head;
+        Node<T> current = head.next;
+        while (current != null) {
+            if (current.data.equals(e)) {
+                prev.next = current.next;
+                if (current == tail) tail = prev; 
+                size--;
+                return;
+            }
+            prev = current;
+            current = current.next;
+        }
+
+    }
     public void reverse(){
         Node<T> prev = null;
         Node<T> current = head;
@@ -163,29 +189,21 @@ public class SLinkedList<T> implements Iterable<T>{
         }
        //TODO
     }
-    //two lists are equal if they have the same 
-    // size and the same elements in the same order
+
+
     @Override
     public boolean equals(Object obj){
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null || getClass() != obj.getClass()) {
-            return false;
-        }
-        @SuppressWarnings("unchecked")
-        SLinkedList<T> other = (SLinkedList<T>) obj;
-        if (this.size != other.size) {
-            return false;
-        }
-        Node<T> current1 = this.head;
-        Node<T> current2 = other.head;
-        while (current1 != null && current2 != null) {
-            if (!current1.data.equals(current2.data)) {
-                return false;
-            }
-            current1 = current1.next;
-            current2 = current2.next;
+        if (this == obj) return true;
+        if (obj == null || !(obj instanceof SLinkedList)) return false;
+
+        SLinkedList<?> other = (SLinkedList<?>) obj;
+        if (this.size != other.size) return false;
+
+       
+        java.util.Iterator<T> it1 = this.iterator();
+        java.util.Iterator<?> it2 = other.iterator();
+        while (it1.hasNext()) {
+            if (!it1.next().equals(it2.next())) return false;
         }
         return true;
     }
