@@ -1,4 +1,3 @@
-package SLIST;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -48,7 +47,12 @@ public class SLinkedList<T> implements Iterable<T>{
         Node<T> newNode = new Node<>(data);
         newNode.next = head;
         head = newNode;
-        tail=newNode;
+        if (tail == null) {
+            tail = newNode; // If the list was empty, set tail to the new node
+        }
+        else {
+            tail.next = newNode; // Update the next reference of the old tail
+        }   tail = newNode; // Update the tail reference to the new node
         size++;
     }
     public void addLast(T data){
@@ -136,17 +140,54 @@ public class SLinkedList<T> implements Iterable<T>{
         return tail.data;
     }
     public void reverse(){
-        
-    //TODO
+        Node<T> prev = null;
+        Node<T> current = head;
+        Node<T> next = null;
+        while (current != null) {
+            next = current.next;
+            current.next = prev;
+            prev = current;
+            current = next;
+        }
+        head = prev;
     }
     public void deleteConsecutiveDuplicates(){
+        Node<T> current = head;
+        while (current != null && current.next != null) {
+            if (current.data.equals(current.next.data)) {
+                current.next = current.next.next;
+                size--;
+            } else {
+                current = current.next;
+            }
+        }
        //TODO
     }
     //two lists are equal if they have the same 
     // size and the same elements in the same order
     @Override
     public boolean equals(Object obj){
-        //TODO
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        @SuppressWarnings("unchecked")
+        SLinkedList<T> other = (SLinkedList<T>) obj;
+        if (this.size != other.size) {
+            return false;
+        }
+        Node<T> current1 = this.head;
+        Node<T> current2 = other.head;
+        while (current1 != null && current2 != null) {
+            if (!current1.data.equals(current2.data)) {
+                return false;
+            }
+            current1 = current1.next;
+            current2 = current2.next;
+        }
+        return true;
     }
 
 }
